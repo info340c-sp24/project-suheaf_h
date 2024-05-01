@@ -1,10 +1,13 @@
 
 import './App.css';
-import Feed from './Feed';
+import Interest from './Interest.js';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import NavScrollExample from './NavBar';
 function App() {
   return (
-    <div className="App">
-      <Feed />
+    <div>
+    <NavScrollExample />
+    <Interest />
     </div>
   );
 }
