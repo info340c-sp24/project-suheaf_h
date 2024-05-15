@@ -9,7 +9,7 @@ function NavScrollExample() {
   return (
     <Navbar expand="lg" className="bg-body-tertiary bg-dark" data-bs-theme="dark">
       <Container fluid>
-        <Navbar.Brand href="#">Navbar scroll</Navbar.Brand>
+        <Navbar.Brand href="#">Dream Team</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -19,20 +19,12 @@ function NavScrollExample() {
           >
             <Nav.Link href="#action1">Home</Nav.Link>
             <Nav.Link href="#action2">Interest</Nav.Link>
-            <Nav.Link href="#action2">Feed</Nav.Link>
-            <Nav.Link href="#action2">Saved Tweets</Nav.Link>
-            <Nav.Link href="#action2">Profile</Nav.Link>
-            <Nav.Link href="#action2">About The Team</Nav.Link>
+            <Nav.Link href="#action3">Feed</Nav.Link>
+            <Nav.Link href="#action4">Saved Tweets</Nav.Link>
+            <Nav.Link href="#action5">Profile</Nav.Link>
+            <Nav.Link href="#action6">About The Team</Nav.Link>
           </Nav>
-          <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-            />
-            <Button variant="outline-success">Search</Button>
-          </Form>
+  
         </Navbar.Collapse>
       </Container>
     </Navbar>
