@@ -4,10 +4,11 @@ import Sarah from "./Person.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComment, faThumbsDown, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import TWEETS from './Tweets.json';
+import CommentPopup from './PopUp.js';
 import REPLIES from './Replies.json';
-import CommentPopup from './PopUp.js'
-import "./css/TweetPreview.css"
-import Avatar from './Defeualt_profile.png'
+import "./css/TweetPreview.css";
+import Avatar from './Defeualt_profile.png';
+
 class Feed extends Component {
   constructor(props) {
     super(props);
@@ -16,38 +17,11 @@ class Feed extends Component {
       showReplies: {},
       newTweetContent: '',
       newTweetImage: null,
-      showTweetPreview: false, 
+      showTweetPreview: false,
+      showCommentPopup: null, // Initialize to null
     };
     this.fileInputRef = React.createRef();
   }
-
-  toggleCommentPopup = (id) => {
-    this.setState((prevState) => ({
-      showCommentPopup: prevState.showCommentPopup === id ? null : id,
-    }));
-  };
-
-  handleFormSubmit = (event) => {
-    event.preventDefault();
-    const { newTweetContent, newTweetImage } = this.state;
-    const newTweet = {
-      id: this.state.tweets.length + 1,
-      name: "Current User",
-      handle: "@currentuser",
-      content: newTweetContent,
-      image: newTweetImage ? URL.createObjectURL(newTweetImage) : Sarah,
-      replies: 0,
-    };
-    this.setState((prevState) => ({
-      tweets: [newTweet, ...prevState.tweets],
-      newTweetContent: '',
-      newTweetImage: null,
-      showCommentPopup: newTweet.id,
-    }));
-    if (this.fileInputRef.current) {
-      this.fileInputRef.current.value = '';
-    }
-  };
 
   toggleReplies = (id) => {
     this.setState((prevState) => ({
@@ -68,6 +42,12 @@ class Feed extends Component {
 
   handleTweetPreview = () => {
     this.setState({ showTweetPreview: true });
+  };
+
+  toggleCommentPopup = (id) => {
+    this.setState((prevState) => ({
+      showCommentPopup: prevState.showCommentPopup === id ? null : id,
+    }));
   };
 
   handleTweetPost = () => {
@@ -129,7 +109,7 @@ class Feed extends Component {
           {this.state.tweets.map((tweet) => (
             <div className="tweet" key={tweet.id}>
               <div className="tweet-header">
-                <img src={tweet.avatar} alt="Avatar" className="avatar" />
+                <img src={tweet.avatar || Avatar} alt="Avatar" className="avatar" />
                 <div className="author-info">
                   <span className="author-name">{tweet.name}</span>
                   <span className="author-handle">{tweet.handle}</span>
@@ -138,9 +118,11 @@ class Feed extends Component {
               <div className="tweet-content">
                 <p>{tweet.content}</p>
               </div>
-              {tweet.image &&<div class="tweet-image-container">
-  <img src={tweet.image} alt="Tweet" class="tweet-image" />
-</div>}
+              {tweet.image && (
+                <div className="tweet-image-container">
+                  <img src={tweet.image} alt="Tweet" className="tweet-image" />
+                </div>
+              )}
               <div className="tweet-icons">
                 <FontAwesomeIcon icon={faThumbsUp} className="fa-icon" />
                 <FontAwesomeIcon icon={faThumbsDown} className="fa-icon" />
@@ -186,9 +168,6 @@ class Feed extends Component {
   }
 }
 
-
-
-
 const TweetPreviewPopup = ({ show, tweetContent, tweetImage, onClose, onPost }) => {
   if (!show) {
     return null;
@@ -209,7 +188,7 @@ const TweetPreviewPopup = ({ show, tweetContent, tweetImage, onClose, onPost }) 
         </div>
         <div className="button-container">
           <button onClick={onPost}>Post</button>
-          <button onClick={onClose}>Discard</button>
+          <button onClick={onClose}>Cancel</button>
         </div>
       </div>
     </div>

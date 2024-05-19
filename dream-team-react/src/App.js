@@ -13,7 +13,7 @@ import SavedTweets from './SavedTweets.js';
 function App() {
   return (
     <div>
-       <SavedTweets /> 
+      
     
       
        {/* <Interest /> */}
@@ -21,8 +21,9 @@ function App() {
        {/* <CreateProfile />  */}
       {/* <SavedTweets /> */}
       
-      {/* <NavScrollExample /> */}
+      <NavScrollExample />
       <div style={{ marginTop: '20px' }}> 
+      <Feed /> 
       {/* <CreateProfile /> */}
       {/* <Profile /> */}
         {/* <Feed /> */}
