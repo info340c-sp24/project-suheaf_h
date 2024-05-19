@@ -1,0 +1,124 @@
+[
+  {
+	"id": 1,
+	"name": "Alex Turner",
+	"handle": "@alexturner",
+	"content": "Just watched an incredible game by LeBron James! The energy was off the charts!",
+	"image": "./LeBronJames.jpg",
+	"likes": 1200,
+	"dislikes": 50,
+	"replies": 300,
+	"avatar": "./alexturner.jpg"
+  },
+  {
+	"id": 2,
+	"name": "Rachel Green",
+	"handle": "@rachelgreen",
+	"content": "The game tonight featuring Stephen Curry was a nail-biter. Amazing performance by both teams!",
+	"image": "./StephenCurry.jpg",
+	"likes": 1400,
+	"dislikes": 30,
+	"replies": 250,
+	"avatar": "./RachelGreen.jpg"
+  },
+  {
+	"id": 3,
+	"name": "Ethan White",
+	"handle": "@ethanwhite",
+	"content": "What a match with Lionel Messi! The last-minute goal was just phenomenal.",
+	"image": "./LionelMessi.jpg",
+	"likes": 1300,
+	"dislikes": 40,
+	"replies": 280,
+	"avatar": "./EthanWhite.jpg"
+  },
+  {
+	"id": 4,
+	"name": "Sophia Hill",
+	"handle": "@sophiahill",
+	"content": "The game I just watched by Serena Williams was so intense! Proud of the players.",
+	"image": "./SerenaWilliams.jpg",
+	"likes": 1250,
+	"dislikes": 35,
+	"replies": 260,
+	"avatar": "./SophiaHill.jpg"
+  },
+  {
+	"id": 5,
+	"name": "Mark Thompson",
+	"handle": "@markthompson",
+	"content": "That game by Tom Brady was one for the books. Incredible plays and teamwork!",
+	"image": "./TomBrady.jpg",
+	"likes": 1150,
+	"dislikes": 45,
+	"replies": 220,
+	"avatar": "./MarkThompson.jpg"
+  },
+  {
+	"id": 6,
+	"name": "Emily Clark",
+	"handle": "@emilyclark",
+	"content": "Amazing game tonight by Rafael Nadal. The players gave their all on the field.",
+	"image": "./RafaelNadal.jpg",
+	"likes": 1100,
+	"dislikes": 40,
+	"replies": 210,
+	"avatar": "./EmilyClark.jpg"
+  },
+  {
+	"id": 7,
+	"name": "Chris Baker",
+	"handle": "@chrisbaker",
+	"content": "Fantastic game with a stunning finish by Cristiano Ronaldo. Couldn't have asked for more.",
+	"image": "./CristianoRonaldo.jpg",
+	"likes": 1450,
+	"dislikes": 50,
+	"replies": 300,
+	"avatar": "./ChrisBaker.jpg"
+  },
+  {
+	"id": 8,
+	"name": "Laura Scott",
+	"handle": "@laurascott",
+	"content": "The intensity of the game by Megan Rapinoe was unbelievable. Great job, everyone!",
+	"image": "./MeganRapinoe.jpg",
+	"likes": 1350,
+	"dislikes": 30,
+	"replies": 270,
+	"avatar": "./Laura.jpg"
+  },
+  {
+	"id": 9,
+	"name": "Daniel Evans",
+	"handle": "@danielevans",
+	"content": "Incredible match tonight by Roger Federer. The players showed amazing skill and determination.",
+	"image": "./RogerFederer.jpg",
+	"likes": 1250,
+	"dislikes": 35,
+	"replies": 250,
+	"avatar": "./DanielEvans.jpg"
+  },
+  {
+	"id": 10,
+	"name": "Mia Walker",
+	"handle": "@miawalker",
+	"content": "Loved watching the game tonight by Simone Biles. So much talent on display!",
+	"image": "./SimoneBiles.jpg",
+	"likes": 1400,
+	"dislikes": 29,
+	"replies": 290,
+	"avatar": "./MiaWalker.jpg"
+  },
+  {
+	"id": 11,
+	"name": "Ryan Miller",
+	"handle": "@ryanmiller",
+	"content": "The speed and precision in tonight's game by Usain Bolt were incredible. Great job, team!",
+	"image": "./UsainBolt.jpg",
+	"likes": 1500,
+	"dislikes": 35,
+	"replies": 300,
+	"avatar": "./RyanMiller.jpg"
+  }
+]
+
