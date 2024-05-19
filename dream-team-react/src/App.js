@@ -6,16 +6,18 @@ import Feed from './Feed.js'
 import Profile from './Profile.js';
 import AboutPage from './AboutPage.js'
 import SavedTweets from './SavedTweets.js';
-// import CreateProfile from './CreateProfile.js';
+//import CreateProfile from './CreateProfile.js';
 // import LandingPage from './LandingPage.js';
 
 // import CreateProfile from './CreateProfile.js';
 function App() {
   return (
     <div>
+       <SavedTweets /> 
+    
       
        {/* <Interest /> */}
-       <Feed />
+       {/* <Feed /> */}
        {/* <CreateProfile />  */}
       {/* <SavedTweets /> */}
       
