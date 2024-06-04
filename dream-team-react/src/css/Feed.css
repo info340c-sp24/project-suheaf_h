@@ -300,6 +300,24 @@ header {
   max-width: 90%;
 }
 
+/* Add a default color for the bookmark icon */
+.fa-icon.bookmark {
+  color: blue; /* Default color for unsaved tweets */
+}
+
+/* Add a different color for bookmarked tweets */
+.fa-icon.bookmark.bookmarked {
+  color: black; /* Color for bookmarked tweets */
+}
+
+.fa-icon {
+  border: 1px solid black; /* Add a black border */
+  border-radius: 50%; /* Make the border circular */
+  padding: 5px; /* Add padding to the icons */
+}
+
+
+
 .close-button {
   position: absolute;
   top: 10px;

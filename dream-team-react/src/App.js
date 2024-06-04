@@ -22,6 +22,7 @@ class App extends Component {
     this.state = {
       user: null,
       isNewUser: true,
+      SAVEDTWEETS: {}
     };
 
     this.uiConfig = {
@@ -79,8 +80,8 @@ class App extends Component {
           <Routes>
             {isNewUser && <Route path="/interest" element={<Interest user={user} />} />}
             <Route path="/" element={<Navigate to="/feed" user={user}/>} />
-            <Route path="/feed" element={<Feed user={user} />} />
-            <Route path="/savedTweets" element={<SavedTweets user={user} />} />
+            <Route path="/feed" element={<Feed user={user} tweets={this.state.SAVEDTWEETS}/>} />
+            <Route path="/savedTweets" element={<SavedTweets user={user} tweets={this.state.SAVEDTWEETS}/>} />
             <Route path="/profile" element={<Profile user={user} />} />
             <Route path="/about" element={<AboutPage user={user} />} />
   

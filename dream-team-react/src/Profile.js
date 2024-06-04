@@ -3,16 +3,15 @@ import './css/Profile.css';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 import "firebase/auth";
 import firebase from "firebase/compat/app";
-
-const Profile = () => {
+import Any from './Annoymus.jpg'
+const Profile = (props) => {
   const [isEditing, setIsEditing] = useState(false);
   const [profile, setProfile] = useState({
-    name: 'Jessica Pena',
-    username: '@Jessica',
-    bio: `Jessica is a passionate athlete who enjoys playing various sports, from basketball to soccer. 
-    She thrives on the adrenaline rush of competition and loves being active outdoors. 
-    Whether it's on the court or the field, you'll find her giving her all and inspiring others to stay fit and pursue their athletic dreams.`,
-    image: 'Person.jpg',
+    name: props.user.displayName,
+    username: "@" + props.user.displayName,
+    bio: props.user.displayName + ` is a passionate athlete who enjoys playing various sports, from basketball to soccer. 
+    `,
+    image: Any,
     favoriteTeam: 'Warriors'
   });
 

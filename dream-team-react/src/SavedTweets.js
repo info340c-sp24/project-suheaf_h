@@ -2,14 +2,42 @@ import React from "react";
 import "./css/Saved.css";
 import TWEETS from './SavedTweets.json';
 import REPLIES from './SavedReplies.json';
-
+import "firebase/auth";
+import firebase from "firebase/compat/app";
+import "firebase/database";
 class SavedTweets extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       showReplies: {},
+      savedTweets: []
     };
   }
+
+  componentDidMount() {
+    const database = firebase.database();
+    const savedTweetsRef = database.ref("bookmarkedTweets");
+
+    savedTweetsRef.on("value", (snapshot) => {
+      const savedTweetsData = snapshot.val();
+      if (savedTweetsData) {
+        const savedTweetsArray = Object.entries(savedTweetsData).map(([id, tweet]) => ({
+          id,
+          ...tweet,
+        }));
+        this.setState({ savedTweets: savedTweetsArray });
+      }
+    });
+  }
+
+  toggleReplies = (id) => {
+    this.setState((prevState) => ({
+      showReplies: {
+        ...prevState.showReplies,
+        [id]: !prevState.showReplies[id],
+      },
+    }));
+  };
 
   toggleReplies = (id) => {
     this.setState((prevState) => ({
@@ -43,7 +71,7 @@ class SavedTweets extends React.Component {
         </header>
         
         <div className="tweets-grid">
-          {TWEETS.map((tweet) => (
+          {this.state.savedTweets.map((tweet) => (
             <div className="tweet" key={tweet.id}>
               <div className="tweet-header">
                 <img src={tweet.avatar} alt="Avatar" className="avatar" />

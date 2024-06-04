@@ -22,7 +22,7 @@ function NavBar() {
             <Nav.Link href="/">Home</Nav.Link>
             {/* <Nav.Link href="/">Interest</Nav.Link> */}
             <Nav.Link href="/feed">Feed</Nav.Link>
-            <Nav.Link href="/savedTweets">Saved Tweets</Nav.Link>
+            {/* <Nav.Link href="/savedTweets">Saved Tweets</Nav.Link> */}
             <Nav.Link href="/profile">Profile</Nav.Link>
             <Nav.Link href="/About">About The Team</Nav.Link>
           </Nav>

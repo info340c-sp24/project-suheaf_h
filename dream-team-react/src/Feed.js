@@ -26,16 +26,112 @@ class Feed extends Component {
     this.fileInputRef = React.createRef();
   }
 
+  handleLikeTweet = (tweetId) => {
+    const { likedTweets } = this.state;
+    const { displayName } = this.props.user;
+    const database = firebase.database();
+    const userLikeRef = database.ref(`likedTweets/${displayName}/${tweetId}`);
+  
+    userLikeRef.transaction((currentLike) => {
+      if (currentLike === null) {
+        return true;
+      } else {
+        return null;
+      }
+    })
+    .then(() => {
+      this.setState((prevState) => ({
+        likedTweets: {
+          ...prevState.likedTweets,
+          [tweetId]: !prevState.likedTweets[tweetId],
+        },
+      }));
+  
+      userLikeRef.set(!likedTweets[tweetId]);
+    })
+    .catch((error) => {
+      console.error('Error toggling like:', error);
+    });
+  };
+
+  handleLikeTweet = (tweetId) => {
+    const { likedTweets } = this.state;
+    const { displayName } = this.props.user;
+    const database = firebase.database();
+    const userLikeRef = database.ref(`likedTweets/${displayName}/${tweetId}`);
+  
+    userLikeRef.transaction((currentLike) => {
+      if (currentLike === null) {
+        return true;
+      } else {
+        return null;
+      }
+    })
+    .then(() => {
+      this.setState((prevState) => ({
+        likedTweets: {
+          ...prevState.likedTweets,
+          [tweetId]: !prevState.likedTweets[tweetId],
+        },
+      }));
+  
+      userLikeRef.set(!likedTweets[tweetId]);
+    })
+    .catch((error) => {
+      console.error('Error toggling like:', error);
+    });
+  };
+  
   componentDidMount() {
     const database = firebase.database();
-    database.ref('tweets').on('value', snapshot => {
-      const tweetsData = snapshot.val();
+    const tweetsRef = database.ref('tweets');
+    const repliesRef = database.ref('replies');
+    const likedTweetsRef = database.ref(`likedTweets/${this.props.user.displayName}`);
+
+likedTweetsRef.on('value', (snapshot) => {
+  const likedTweetsData = snapshot.val();
+  if (likedTweetsData) {
+    this.setState({ likedTweets: likedTweetsData });
+  }
+});
+
+
+  
+    tweetsRef.on('value', (tweetsSnapshot) => {
+      const tweetsData = tweetsSnapshot.val();
       if (tweetsData) {
         const tweetsArray = Object.entries(tweetsData).map(([id, tweet]) => ({ id, ...tweet }));
         this.setState({ tweets: tweetsArray });
+  
+        tweetsArray.forEach((tweet) => {
+          repliesRef.child(tweet.id).on('value', (repliesSnapshot) => {
+            const repliesData = repliesSnapshot.val();
+            if (repliesData) {
+              const replyCount = Object.keys(repliesData).length;
+              this.setState((prevState) => ({
+                tweets: prevState.tweets.map((t) => {
+                  if (t.id === tweet.id) {
+                    return { ...t, replies: replyCount };
+                  }
+                  return t;
+                }),
+              }));
+            } else {
+              this.setState((prevState) => ({
+                tweets: prevState.tweets.map((t) => {
+                  if (t.id === tweet.id) {
+                    return { ...t, replies: 0 };
+                  }
+                  return t;
+                }),
+              }));
+            }
+          });
+        });
       }
     });
   }
+  
 
   toggleReplies = (id) => {
     const { showReplies } = this.state;
@@ -231,6 +327,8 @@ class Feed extends Component {
     );
   }
 }
+
+
 
 const TweetPreviewPopup = ({ show, tweetContent, tweetImage, onClose, onPost }) => {
   if (!show) {
