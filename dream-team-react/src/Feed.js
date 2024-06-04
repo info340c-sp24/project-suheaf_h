@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import "./css/Feed.css";
-import Sarah from "./Person.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComment, faThumbsDown, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import TWEETS from './Tweets.json';
 import CommentPopup from './PopUp.js';
-import REPLIES from './Replies.json';
 import "./css/TweetPreview.css";
 import Avatar from './Defeualt_profile.png';
+import "firebase/auth";
+import firebase from "firebase/compat/app";
+import "firebase/database"; // Import Firebase Database
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 class Feed extends Component {
   constructor(props) {
@@ -18,18 +20,49 @@ class Feed extends Component {
       newTweetContent: '',
       newTweetImage: null,
       showTweetPreview: false,
-      showCommentPopup: null, // Initialize to null
+      showCommentPopup: null, 
+      replies: {}, 
     };
     this.fileInputRef = React.createRef();
   }
 
+  componentDidMount() {
+    const database = firebase.database();
+    database.ref('tweets').on('value', snapshot => {
+      const tweetsData = snapshot.val();
+      if (tweetsData) {
+        const tweetsArray = Object.entries(tweetsData).map(([id, tweet]) => ({ id, ...tweet }));
+        this.setState({ tweets: tweetsArray });
+      }
+    });
+  }
+
   toggleReplies = (id) => {
-    this.setState((prevState) => ({
-      showReplies: {
-        ...prevState.showReplies,
-        [id]: !prevState.showReplies[id],
-      },
-    }));
+    const { showReplies } = this.state;
+
+    if (!showReplies[id]) {
+      const database = firebase.database();
+      database.ref(`replies/${id}`).on('value', snapshot => {
+        const repliesData = snapshot.val();
+        this.setState((prevState) => ({
+          showReplies: {
+            ...prevState.showReplies,
+            [id]: !prevState.showReplies[id],
+          },
+          replies: {
+            ...prevState.replies,
+            [id]: repliesData ? Object.values(repliesData) : [],
+          },
+        }));
+      });
+    } else {
+      this.setState((prevState) => ({
+        showReplies: {
+          ...prevState.showReplies,
+          [id]: !prevState.showReplies[id],
+        }
+      }));
+    }
   };
 
   handleInputChange = (event) => {
@@ -53,30 +86,57 @@ class Feed extends Component {
   handleTweetPost = () => {
     const { newTweetContent, newTweetImage } = this.state;
     const newTweet = {
-      id: this.state.tweets.length + 1,
-      name: "Current User",
-      handle: "@currentuser",
+      name: this.props.user.displayName,
+      handle: "@" + this.props.user.displayName,
       content: newTweetContent,
-      image: newTweetImage ? URL.createObjectURL(newTweetImage) : Sarah,
+      image: newTweetImage ? URL.createObjectURL(newTweetImage) : null,
       replies: 0,
     };
-    this.setState((prevState) => ({
-      tweets: [newTweet, ...prevState.tweets],
-      newTweetContent: '',
-      newTweetImage: null,
-      showTweetPreview: false,
-    }));
-    if (this.fileInputRef.current) {
-      this.fileInputRef.current.value = '';
-    }
+
+    const database = firebase.database();
+    database.ref('tweets').push(newTweet)
+      .then(() => {
+        this.setState({
+          newTweetContent: '',
+          newTweetImage: null,
+          showTweetPreview: false,
+        });
+        if (this.fileInputRef.current) {
+          this.fileInputRef.current.value = '';
+        }
+      })
+      .catch(error => {
+        console.error("Error posting tweet: ", error);
+      });
   };
 
   handleCloseTweetPreview = () => {
     this.setState({ showTweetPreview: false });
   };
 
+  handleCommentSubmit = (comment) => {
+    const { showCommentPopup } = this.state;
+    const database = firebase.database();
+    const newReply = {
+      name: "Current User",
+      handle: "@currentuser",
+      content: comment,
+      date: new Date().toISOString(),
+    };
+
+    database.ref(`replies/${showCommentPopup}`).push(newReply)
+      .then(() => {
+        this.setState({ showCommentPopup: null });
+        // Reload replies for the tweet
+        this.toggleReplies(showCommentPopup);
+      })
+      .catch(error => {
+        console.error("Error posting reply: ", error);
+      });
+  };
+
   render() {
-    const { newTweetContent, newTweetImage, showTweetPreview } = this.state;
+    const { newTweetContent, newTweetImage, showTweetPreview, showReplies, replies } = this.state;
 
     return (
       <div className="feed-container">
@@ -134,11 +194,11 @@ class Feed extends Component {
                 <div className="reply-count">{tweet.replies} replies</div>
               </div>
               <button className="toggle-replies-button" onClick={() => this.toggleReplies(tweet.id)}>
-                {this.state.showReplies[tweet.id] ? "Hide Replies" : "Show Replies"}
+                {showReplies[tweet.id] ? "Hide Replies" : "Show Replies"}
               </button>
-              {this.state.showReplies[tweet.id] && (
+              {showReplies[tweet.id] && (
                 <div className="replies">
-                  {REPLIES.filter(reply => reply.tweetId === tweet.id).map((reply) => (
+                  {replies[tweet.id] && replies[tweet.id].map((reply) => (
                     <div className="reply" key={reply.id}>
                       <div className="reply-header">
                         <span className="reply-author-name">{reply.name}</span>
@@ -162,7 +222,11 @@ class Feed extends Component {
           onClose={this.handleCloseTweetPreview}
           onPost={this.handleTweetPost}
         />
-        <CommentPopup show={this.state.showCommentPopup !== null} onClose={() => this.setState({ showCommentPopup: null })} />
+        <CommentPopup 
+          show={this.state.showCommentPopup !== null} 
+          onClose={() => this.setState({ showCommentPopup: null })} 
+          onSubmit={this.handleCommentSubmit} 
+        />
       </div>
     );
   }

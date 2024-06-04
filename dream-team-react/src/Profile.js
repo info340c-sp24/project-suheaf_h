@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import './css/Profile.css';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+import "firebase/auth";
+import firebase from "firebase/compat/app";
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -41,6 +44,19 @@ const Profile = () => {
     e.preventDefault();
     setProfile(newProfile);
     setIsEditing(false);
+  };
+
+  const navigate = useNavigate(); // Access the navigate function from react-router-dom
+
+  const handleSignOut = () => {
+    firebase.auth().signOut().then(() => {
+      // Sign-out successful.
+      console.log('User signed out successfully');
+      navigate('/'); // Redirect to the landing page after sign-out
+    }).catch((error) => {
+      // An error happened.
+      console.error('Error signing out:', error);
+    });
   };
 
   return (
@@ -87,6 +103,7 @@ const Profile = () => {
                 <span><i className="fa fa-linkedin"></i></span>
               </div>
               <div className="date">Favorite Team: {profile.favoriteTeam}</div>
+              <button className="sign-out-btn" onClick={handleSignOut}>Sign Out</button>
             </>
           )}
         </div>

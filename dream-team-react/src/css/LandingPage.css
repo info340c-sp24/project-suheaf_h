@@ -1,54 +1,34 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f0f0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100vw;
-    box-sizing: border-box;
-}
-
-.BUTTONS {
-    width: "100%"
-}
-
-.container {
+.containerLand {
     width: 100%;
     max-width: 600px;
+    margin: auto; /* Center the container horizontally */
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     box-sizing: border-box;
-}
-
-h1 {
+  }
+  
+  .TestH1 {
     font-size: 36px;
     color: #333;
     margin-bottom: 20px;
-}
-
-p {
+  }
+  
+  .P {
     font-size: 18px;
     color: #666;
     margin-bottom: 30px;
-}
-
-img {
+  }
+  
+  .Imagee {
     max-width: 100%;
     height: auto;
     margin-bottom: 30px;
-}
-
-.btn {
+  }
+  
+  .Button_Landing {
     width: 100%;
     padding: 15px;
     background-color: #007bff;
@@ -60,26 +40,9 @@ img {
     border: none;
     font-size: 18px;
     cursor: pointer;
-}
-
-.btn:hover {
+  }
+  
+  .Button_Landing:hover {
     background-color: #0056b3;
-}
-
-@media (max-width: 600px) {
-    .container {
-        width: 100%;
-        border-radius: 0;
-        padding: 10px;
-    }
-    h1 {
-        font-size: 24px;
-    }
-    p {
-        font-size: 16px;
-    }
-    .btn {
-        width: 100%;
-        margin: 10px 0;
-    }
-}
+  }
+  

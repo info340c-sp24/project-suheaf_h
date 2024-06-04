@@ -23,7 +23,7 @@ export default class Interest extends React.Component {
             <button id="cycling">Cycling</button>
             <button id="boxing">Boxing</button>
         </div>
-        <a href="/major">
+        <a href="/feed">
             <button className="continue-button">
                 Continue
             </button>

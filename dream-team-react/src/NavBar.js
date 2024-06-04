@@ -7,7 +7,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import './css/NavBar.css'; 
 
-function NavScrollExample() {
+function NavBar() {
   return (
     <Navbar expand="lg" className="bg-body-tertiary bg-dark" data-bs-theme="dark">
       <Container fluid>
@@ -19,12 +19,12 @@ function NavScrollExample() {
           style={{ maxHeight: '100px' }}
           navbarScroll
         >
-            <Nav.Link href="#action1">Home</Nav.Link>
-            <Nav.Link href="#action2">Interest</Nav.Link>
-            <Nav.Link href="#action3">Feed</Nav.Link>
-            <Nav.Link href="#action4">Saved Tweets</Nav.Link>
-            <Nav.Link href="#action5">Profile</Nav.Link>
-            <Nav.Link href="#action6">About The Team</Nav.Link>
+            <Nav.Link href="/">Home</Nav.Link>
+            {/* <Nav.Link href="/">Interest</Nav.Link> */}
+            <Nav.Link href="/feed">Feed</Nav.Link>
+            <Nav.Link href="/savedTweets">Saved Tweets</Nav.Link>
+            <Nav.Link href="/profile">Profile</Nav.Link>
+            <Nav.Link href="/About">About The Team</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -32,4 +32,4 @@ function NavScrollExample() {
   );
 }
 
-export default NavScrollExample;
+export default NavBar;
