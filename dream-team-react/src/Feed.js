@@ -8,7 +8,7 @@ import "./css/TweetPreview.css";
 import Avatar from './Defeualt_profile.png';
 import "firebase/auth";
 import firebase from "firebase/compat/app";
-import "firebase/database"; // Import Firebase Database
+import "firebase/database"; 
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 class Feed extends Component {
@@ -118,8 +118,8 @@ class Feed extends Component {
     const { showCommentPopup } = this.state;
     const database = firebase.database();
     const newReply = {
-      name: "Current User",
-      handle: "@currentuser",
+      name: this.props.user.displayName,
+      handle: "@" + this.props.user.displayName,
       content: comment,
       date: new Date().toISOString(),
     };
@@ -127,7 +127,7 @@ class Feed extends Component {
     database.ref(`replies/${showCommentPopup}`).push(newReply)
       .then(() => {
         this.setState({ showCommentPopup: null });
-        // Reload replies for the tweet
+        
         this.toggleReplies(showCommentPopup);
       })
       .catch(error => {
